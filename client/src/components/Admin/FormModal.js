@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const FormModal = ({ showModal, hideModal, formValues, setFormValues }) => {
+const FormModal = ({ showModal, hideModal, formValues }) => {
   const [employees, setEmployees] = useState([]);
-  //   const [assigned_to, setassigned_to] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
 
-  console.log("employees", employees);
   useEffect(() => {
-    console.log("employee executed");
     fetch(`${process.env.REACT_APP_BASE_URL}/employee`)
       .then((res) => res.json())
       .then((results) => {
@@ -68,34 +65,6 @@ const FormModal = ({ showModal, hideModal, formValues, setFormValues }) => {
               disabled
               className="form-control"
             />
-            {/* <select
-              className="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setFormDetails({
-                  ...formDetails,
-                  product_type: e.target.value,
-                });
-                if (e.target.value === "mobile_phone") {
-                  setIssueTypeOptions(mobilePhoneOptions);
-                } else if (e.target.value === "tv") {
-                  setIssueTypeOptions(tvOptions);
-                } else if (e.target.value === "regrigerator") {
-                  setIssueTypeOptions(refrigeratorOptions);
-                } else {
-                  setIssueTypeOptions(washingMachineOptions);
-                }
-              }}
-              value={formDetails.product_type}
-              id="product_type"
-            >
-              <option>Select Product Type</option>
-              {productTypeOptions.map(({ label, value }) => (
-                <option value={value} key={value}>
-                  {label}
-                </option>
-              ))}
-            </select> */}
           </div>
           <div className="form-group">
             <label htmlFor="issue_type">Issue Type</label>
@@ -105,39 +74,12 @@ const FormModal = ({ showModal, hideModal, formValues, setFormValues }) => {
               disabled
               className="form-control"
             />
-            {/* <select
-              className="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setFormDetails({
-                  ...formDetails,
-                  issue_type: e.target.value,
-                });
-              }}
-              value={formDetails.issue_type}
-              id="issue_type"
-            >
-              <option>Select Issue Type</option>
-              {issueTypeOptions.map(({ label, value }) => (
-                <option value={value} key={value}>
-                  {label}
-                </option>
-              ))}
-              
-            </select> */}
           </div>
           <div className="form-group">
             <label htmlFor="assigned_to">Assigned To</label>
             <select
               className="form-control"
-              onChange={(e) => {
-                // setFormValues({
-                //   ...formValues,
-                //   assigned_to: e.target.value,
-                // });
-                setAssignedTo(e.target.value);
-              }}
-              //   value={formValues.issue_type}
+              onChange={(e) => setAssignedTo(e.target.value)}
               id="assigned_to"
             >
               <option>Assigned To</option>

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 let customerSupportRequest = new Schema({
   product_type: {
     type: String,
@@ -14,7 +15,7 @@ let customerSupportRequest = new Schema({
     required: true,
   },
   policy_upload: {
-    type: Buffer,
+    type: String,
     required: false,
     default: "",
   },
@@ -35,4 +36,5 @@ let customerSupportRequest = new Schema({
     default: null,
   },
 });
+
 module.exports = mongoose.model("SupportRequest", customerSupportRequest);

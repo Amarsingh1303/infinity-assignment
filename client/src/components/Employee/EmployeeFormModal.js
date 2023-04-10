@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
@@ -24,12 +24,8 @@ const EmployeeFormModal = ({ showModal, hideModal, formValues }) => {
       },
     })
       .then((res) => res.json())
-      .then((results) => {
-        console.log("results", results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((results) => console.log("results", results))
+      .catch((err) => console.log(err));
     hideModal();
   };
 
@@ -56,34 +52,6 @@ const EmployeeFormModal = ({ showModal, hideModal, formValues }) => {
               disabled
               className="form-control"
             />
-            {/* <select
-              className="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setFormDetails({
-                  ...formDetails,
-                  product_type: e.target.value,
-                });
-                if (e.target.value === "mobile_phone") {
-                  setIssueTypeOptions(mobilePhoneOptions);
-                } else if (e.target.value === "tv") {
-                  setIssueTypeOptions(tvOptions);
-                } else if (e.target.value === "regrigerator") {
-                  setIssueTypeOptions(refrigeratorOptions);
-                } else {
-                  setIssueTypeOptions(washingMachineOptions);
-                }
-              }}
-              value={formDetails.product_type}
-              id="product_type"
-            >
-              <option>Select Product Type</option>
-              {productTypeOptions.map(({ label, value }) => (
-                <option value={value} key={value}>
-                  {label}
-                </option>
-              ))}
-            </select> */}
           </div>
           <div className="form-group">
             <label htmlFor="issue_type">Issue Type</label>
@@ -93,39 +61,12 @@ const EmployeeFormModal = ({ showModal, hideModal, formValues }) => {
               disabled
               className="form-control"
             />
-            {/* <select
-              className="form-control"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setFormDetails({
-                  ...formDetails,
-                  issue_type: e.target.value,
-                });
-              }}
-              value={formDetails.issue_type}
-              id="issue_type"
-            >
-              <option>Select Issue Type</option>
-              {issueTypeOptions.map(({ label, value }) => (
-                <option value={value} key={value}>
-                  {label}
-                </option>
-              ))}
-              
-            </select> */}
           </div>
           <div className="form-group">
             <label htmlFor="status">Change Status</label>
             <select
               className="form-control"
-              onChange={(e) => {
-                // setFormValues({
-                //   ...formValues,
-                //   assigned_to: e.target.value,
-                // });
-                setStatus(e.target.value);
-              }}
-              //   value={formValues.issue_type}
+              onChange={(e) => setStatus(e.target.value)}
               id="status"
             >
               <option>select status</option>

@@ -10,11 +10,10 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const entry = {
-      user_name: user_name,
-      email: email,
-      password: password,
+    const userDetails = {
+      user_name,
+      email,
+      password,
     };
 
     fetch(`${process.env.REACT_APP_BASE_URL}/signup`, {
@@ -22,15 +21,11 @@ function SignUp() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(entry),
+      body: JSON.stringify(userDetails),
     })
       .then((res) => res.json())
-      .then((res) => {
-        setErr(res.msg.msgBody);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => setErr(res.msg.msgBody))
+      .catch((err) => console.log(err));
     setEmail("");
     setPassword("");
     setUser_name("");

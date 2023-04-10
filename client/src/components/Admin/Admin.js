@@ -13,27 +13,20 @@ const Admin = () => {
     issue_type: "",
     assigned_to: "",
   });
-  console.log("unallocatedTask", unAllocatedTasks);
-  console.log("allocatedTasks", allocatedTasks);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BASE_URL}/tasks`)
       .then((res) => res.json())
       .then((results) => {
-        console.log("res task wala", results);
         setUnAllocatedTasks(
-          results.tasks.filter((item) => item.assigned_to === null)
+          results.tasks.filter((task) => task.assigned_to === null)
         );
         setAllocatedTasks(
-          results.tasks.filter((item) => item.assigned_to != null)
+          results.tasks.filter((task) => task.assigned_to != null)
         );
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   }, [formValues]);
-
-  console.log("formValues", formValues);
 
   return (
     <Container>
@@ -52,10 +45,7 @@ const Admin = () => {
           formValues={formValues}
         />
       )}
-      <Accordion
-        defaultActiveKey="0"
-        onClick={() => console.log("task clickeed")}
-      >
+      <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
           <Accordion.Header>Unallocated Tasks</Accordion.Header>
           <Accordion.Body>
@@ -71,33 +61,40 @@ const Admin = () => {
                 </tr>
               </thead>
               <tbody>
-                {unAllocatedTasks.map((item) => {
-                  console.log("item", item);
-                  return (
-                    <tr key={item._id}>
-                      <td>{item.id}</td>
-                      <td>{item.submitted_by.user_name}</td>
-                      <td>{item.product_type}</td>
-                      <td>{item.issue_type}</td>
-                      <td>{item.date_of_submission}</td>
-                      <td>
-                        <button
-                          onClick={() => {
-                            setFormValues({
-                              id: item._id,
-                              product_type: item.product_type,
-                              issue_type: item.issue_type,
-                              date_of_submission: item.date_of_submission,
-                            });
-                            setShowModal(true);
-                          }}
-                        >
-                          More Details
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {unAllocatedTasks.map(
+                  ({
+                    _id,
+                    submitted_by,
+                    product_type,
+                    issue_type,
+                    date_of_submission,
+                  }) => {
+                    return (
+                      <tr key={_id}>
+                        <td>{_id}</td>
+                        <td>{submitted_by.user_name}</td>
+                        <td>{product_type}</td>
+                        <td>{issue_type}</td>
+                        <td>{date_of_submission}</td>
+                        <td>
+                          <button
+                            onClick={() => {
+                              setFormValues({
+                                id: _id,
+                                product_type,
+                                issue_type,
+                                date_of_submission,
+                              });
+                              setShowModal(true);
+                            }}
+                          >
+                            More Details
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
               </tbody>
             </Table>
           </Accordion.Body>
@@ -118,19 +115,28 @@ const Admin = () => {
                 </tr>
               </thead>
               <tbody>
-                {allocatedTasks.map((item) => {
-                  return (
-                    <tr>
-                      <td>{item.id}</td>
-                      <td>{item.submitted_by.user_name}</td>
-                      <td>{item.product_type}</td>
-                      <td>{item.issue_type}</td>
-                      <td>{item.date_of_submission}</td>
-                      <td>{item.status}</td>
-                      <td>More Details</td>
-                    </tr>
-                  );
-                })}
+                {allocatedTasks.map(
+                  ({
+                    _id,
+                    submitted_by,
+                    product_type,
+                    issue_type,
+                    date_of_submission,
+                    status,
+                  }) => {
+                    return (
+                      <tr key={_id}>
+                        <td>{_id}</td>
+                        <td>{submitted_by.user_name}</td>
+                        <td>{product_type}</td>
+                        <td>{issue_type}</td>
+                        <td>{date_of_submission}</td>
+                        <td>{status}</td>
+                        <td>More Details</td>
+                      </tr>
+                    );
+                  }
+                )}
               </tbody>
             </Table>
           </Accordion.Body>

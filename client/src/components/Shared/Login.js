@@ -15,9 +15,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const entry = {
-      user_name: user_name,
-      password: password,
+    const userDetails = {
+      user_name,
+      password,
       role,
     };
     fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
@@ -25,7 +25,7 @@ function Login() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(entry),
+      body: JSON.stringify(userDetails),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -40,21 +40,15 @@ function Login() {
           })
             .then((res) => res.json())
             .then((res) => {
-              console.log("res", res);
               dispatch(setUser(res));
-              if (res.role === "customer") {
-                navigate("/customer");
-              } else if (res.role === "employee" && res.isAdmin === true) {
+              if (res.role === "customer") navigate("/customer");
+              else if (res.role === "employee" && res.isAdmin === true)
                 navigate("/admin");
-              } else {
-                navigate("/employee");
-              }
+              else navigate("/employee");
             });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
     setPassword("");
     setUser_name("");
     setRole("");
@@ -89,10 +83,7 @@ function Login() {
           <label htmlFor="role">Role</label>
           <select
             className="form-control"
-            onChange={(e) => {
-              console.log(e.target.value);
-              setRole(e.target.value);
-            }}
+            onChange={(e) => setRole(e.target.value)}
             id="role"
           >
             <option>Select Role</option>
